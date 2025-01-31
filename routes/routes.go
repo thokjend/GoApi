@@ -12,6 +12,7 @@ func SetupRouter() *gin.Engine {
     router.GET("/albums", handlers.GetAlbums)
     router.GET("/albums/:id", handlers.GetAlbumByID)
     router.POST("/albums", handlers.PostAlbums)
+    router.GET("/users", handlers.GetUsersHandler)
 
     return router
 }

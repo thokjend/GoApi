@@ -6,6 +6,8 @@ import (
 	"go-api/models"
 
 	"github.com/gin-gonic/gin"
+
+	"go-api/database"
 )
 
 // GetAlbums responds with the list of all albums as JSON.
@@ -36,4 +38,13 @@ func PostAlbums(c *gin.Context) {
 
     models.Albums = append(models.Albums, newAlbum)
     c.IndentedJSON(http.StatusCreated, newAlbum)
+}
+
+func GetUsersHandler(c *gin.Context){
+    users, err := database.GetUsers()
+    if err != nil {
+        c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to fetch users"})
+        return
+    }
+    c.JSON(http.StatusOK, users)
 }
