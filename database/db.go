@@ -6,7 +6,6 @@ import (
 	"log"
 	"time"
 
-	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
@@ -44,29 +43,4 @@ func GetCollection(databaseName, collectionName string) *mongo.Collection {
     return Client.Database(databaseName).Collection(collectionName)
 }
 
-// User represents a user document in MongoDB
-type User struct {
-    Name     string `json:"name" bson:"name"`
-    Password string `json:"password" bson:"password"`
-}
 
-// GetUsers fetches all users from the "users" collection
-func GetUsers() ([]User, error) {
-    collection := GetCollection("Strawpoll", "users")
-
-    ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-    defer cancel()
-
-    cursor, err := collection.Find(ctx, bson.M{}) // Empty filter {} gets all users
-    if err != nil {
-        return nil, err
-    }
-    defer cursor.Close(ctx)
-
-    var users []User
-    if err := cursor.All(ctx, &users); err != nil {
-        return nil, err
-    }
-
-    return users, nil
-}
