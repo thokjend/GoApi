@@ -17,9 +17,7 @@ func ConnectMongoDB() {
     ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
     defer cancel()
 
-    // Replace with your MongoDB connection string
     uri := "mongodb://localhost:27017" // For local MongoDB
-    // uri := "mongodb+srv://<username>:<password>@cluster0.mongodb.net/?retryWrites=true&w=majority" // For MongoDB Atlas
 
     clientOptions := options.Client().ApplyURI(uri)
 
